@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		beans 태그 내부에서 bean 태그를 이용해서 클래스의 객체(bean)를 생성한다.
+		id 속성에 생성할 bean의 이름을 적는다.
+		class 속성에 bean을 생성할 클래스 이름을 반드시 풀 패키지 이름과 함께 적는다.
+	 -->
+	 <!-- MyCalculator class에 bean을 -->
+	 <!-- MyCalculator myCalculator = new Calculator()와 같은 기능이 실행된다 -->
+	<bean id="myCalculator" class="com.tjoeun.springDI_xml_setter.MyCalculator">
+		<!-- 
+			생성된 bean의 필드를 초기화하려면 <bean> ~ <bean> 사이에 하면 된다.
+			생성자나 setter를 이용해서 생성된 bean의 필드를 초기화 시킬 수 있다.
+			
+			property 태그를 이용해서 setter 메소드를 실행하고 필드를 초기화 시키면 된다.
+			name 속성에는 setter를 실행할 필드 이름을 적는다.
+		 -->
+		 
+		 <!-- 
+		 	필드 초기화 방법 1 => value 속성 사용
+		 	myCalculator.setFirstNum(8)와 같은 기능이 실행된다.
+		  -->
+		  <property name="firstNum" value="8">
+		  
+		  </property>
+		  
+		  
+		  <!-- 
+		  	필드 초기화 방법 2 => value 태그 사용
+		  	myCalculator.setSecondNum(5)와 같은 기능이 실행된다.
+		   -->
+		   <property name="secondNum" >
+		   	<value>5</value>
+		   </property>
+		   
+		   <!-- 
+		   	클래스로 만든 변수 => 참조(reference) 변수 => 데이터가 들어가지 않는다. 객체가 생성된 주소
+		   	객체 초기화 방법 1 => ref 속성 사용
+		   -->
+		  <!--  <property name="calculator" ref="calculator"></property> -->
+		   
+		   <!-- 
+		   	객체 초기화 방법 2 => ref 태그 사용
+		    -->	
+		   <property name="calculator">
+		   	<ref bean="calculator"/>
+		   </property>
+	</bean>
+	
+	<!-- Calculator 클래스의 bean을 만든다. -->
+	<bean id="calculator" class="com.tjoeun.springDI_xml_setter.Calculator"/>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
