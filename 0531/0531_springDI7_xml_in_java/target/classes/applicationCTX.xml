@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 
+		xml 파일에서 java 파일의 bean 설정 정보를 읽어오려면 java 파일에서 annotation을 붙여서 설정한
+		정보를 읽어올 수 있게 해야한다.
+		context namespace를 추가한다.
+		beans 태그에 추가된다.
+		<context:annotation-config /> 태그를 추가해서 annotation을 붙여 설정한 java 파일의 bean 설정 정보를
+		읽어올 수 있게한다.
+	 -->
+	 
+	<context:annotation-config />
+
+	<!-- 
+		annotation을 붙여서 bean을 설정한 java 클래스의 bean을 만든다.
+		java 파일에서 지정한 메소드 이름이 id 역할을 하므로 bean 태그에 정의하는 id는 아무 의미없다.
+	 -->	
+	<bean class="com.tjoeun.springDI7_xml_in_java.ApplicationConfig"></bean>
+	
+	<bean id="student" class="com.tjoeun.springDI7_xml_in_java.Student">
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="24"/>
+		<constructor-arg>
+			<list>
+				<value>잠자기</value>
+				<value>노래듣기</value>
+				<value>영화보기</value>
+			</list>
+		</constructor-arg>
+		<property name="weight" value="50" />
+		<property name="height" value="163" />
+	</bean>
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
