@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="student" class="com.tjoeun.springDI8_java_in_xml.Student">
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="24"/>
+		<constructor-arg>
+			<list>
+				<value>잠자기</value>
+				<value>노래듣기</value>
+				<value>영화보기</value>
+			</list>
+		</constructor-arg>
+		<property name="weight" value="50" />
+		<property name="height" value="163" />
+	</bean>
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
