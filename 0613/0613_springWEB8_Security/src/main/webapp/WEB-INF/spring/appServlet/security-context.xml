@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- http로 요청되는 것에 대한 보안을 설정한다. -->
+	<security:http auto-config="true">
+		<!-- /login 요청은 ROLE_USER(id:user, password:123과 id:admin, password:123)만 접근할 수 있다. -->
+		<security:intercept-url pattern="/login" access="ROLE_USER" />
+		<!-- /login 요청은 ROLE_ADMIN(id:admin, password:123)만 접근할 수 있다. -->
+		<security:intercept-url pattern="/welcome" access="ROLE_ADMIN" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<!-- id가 user이고 password가 123이면 login에 접근할 수 있다. -->
+				<security:user name="user" password="123" authorities="ROLE_USER"/>
+				<!-- id가 admin이고 password가 123이면 login과 welcome에 접근할 수 있다. -->
+				<security:user name="admin" password="123" authorities="ROLE_USER, ROLE_ADMIN"/>
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
