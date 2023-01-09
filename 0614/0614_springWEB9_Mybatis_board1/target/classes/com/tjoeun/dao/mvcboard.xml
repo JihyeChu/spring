@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjoeun.dao.MybatisDAO">
+
+<!-- 
+	실행할 sql 명령이 저장된 xml 파일의 namespace에는 반드시 mapper 역할을 하는 인터페이스의
+	이름을 풀 패키지 이름과 같이 적어야 한다. 
+	-->
+
+	<!-- 메인글을 저장한다. -->
+	<insert id="insert" parameterType="vo">
+		insert into mvcboard (idx, name, subject, content, gup, lev, seq) 
+		values (mvcboard_idx_seq.nextval, #{name}, #{subject}, #{content}, mvcboard_idx_seq.currval, 0, 0)
+	</insert>
+	
+	<!-- 전체 글의 개수를 얻어온다. -->
+	<select id="selectCount" resultType="int">
+		select count(*) from mvcboard
+	</select>
+	
+	<!-- 1페이지 분량의 글 목록을 얻어온다. -->
+	<select id="selectList" parameterType="java.util.HashMap" resultType="vo">
+		<!--  
+		<![CDATA[
+			select * from (
+				select rownum rnum, TT.* from (
+					select * from mvcboard order by gup desc, seq asc	
+				) TT where rownum <= #{endNo}
+			) where rnum >= #{startNo}
+		]]>
+		-->
+		select * from (
+			select rownum rnum, TT.* from (
+				select * from mvcboard order by gup desc, seq asc	
+			) TT
+		) where rnum between #{startNo} and #{endNo}
+				
+	</select>
+	
+	<!-- 조회수를 증가시킨다. -->
+	<update id="increment" parameterType="int">
+		update mvcboard set hit = hit + 1 where idx = #{idx}
+	</update>
+	
+	<!-- 글 1건을 얻어온다. -->
+	<select id="selectByIdx" parameterType="int" resultType="vo">
+		select * from mvcboard where idx = #{idx}
+	</select>
+	
+	<!-- 글 1건을 수정한다. -->
+	<update id="update" parameterType="vo">
+		update mvcboard set subject = #{subject}, content = #{content} where idx = #{idx}
+	</update>
+	
+	<!-- 글 1건을 삭제한다. -->
+	<delete id="delete" parameterType="int">
+		delete from mvcboard where idx = #{idx}
+	</delete>
+	
+	<!-- 답글이 삽입될 위치를 확보하기 위해 조건에 만족하는 seq를 1증가 시킨다. -->
+	<update id="incrementSeq" parameterType="vo">
+		update mvcboard set seq = seq + 1 where gup = #{gup} and seq >= #{seq}
+	</update>
+	
+	<!-- 답글을 저장한다. -->
+	<insert id="replyInsert" parameterType="vo">
+		insert into mvcboard (idx, name, subject, content, gup, lev, seq) 
+		values (mvcboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{gup}, #{lev}, #{seq})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
